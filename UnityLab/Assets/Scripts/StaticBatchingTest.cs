@@ -16,10 +16,6 @@ public class StaticBatchingTest : MonoBehaviour
     [Tooltip("생성할 큐브 프리팹 (비어있으면 기본 큐브 생성)")]
     public GameObject cubePrefab;
 
-    [Header("생성 설정")]
-    [Tooltip("생성된 오브젝트를 Batching Static으로 설정할지 여부")]
-    public bool setStatic = true;
-
     /// <summary>
     /// 인스펙터 컨텍스트 메뉴에서 "Generate Grid"를 클릭하여 실행 가능
     /// </summary>
@@ -52,15 +48,12 @@ public class StaticBatchingTest : MonoBehaviour
                     cube.transform.localPosition = new Vector3(x * spacing, y * spacing, z * spacing);
                     cube.name = $"Cube_{x}_{y}_{z}";
 
-                    if (setStatic)
+                    // 그림자 비활성화
+                    MeshRenderer meshRenderer = cube.GetComponent<MeshRenderer>();
+                    if (meshRenderer != null)
                     {
-#if UNITY_EDITOR
-                        // 에디터에서 Batching Static 플래그 설정
-                        GameObjectUtility.SetStaticEditorFlags(cube, StaticEditorFlags.BatchingStatic);
-#else
-                        // 런타임에서 IsStatic 설정 (정적 배칭에는 런타임 설정이 바로 적용되지 않을 수 있음)
-                        cube.isStatic = true;
-#endif
+                        meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                        meshRenderer.receiveShadows = false;
                     }
                 }
             }

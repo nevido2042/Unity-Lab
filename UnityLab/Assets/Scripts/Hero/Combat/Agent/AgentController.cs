@@ -8,6 +8,10 @@ namespace Hero.Combat.Agent
     public class AgentController : MonoBehaviour
     {
         [SerializeField] private Animator _animator;
+        [SerializeField] private SkinnedMeshRenderer _renderer;
+        [SerializeField] private Material _team0Material; // Red
+        [SerializeField] private Material _team1Material; // Blue
+
         [field: SerializeField] public int AgentIndex { get; private set; } = -1;
 
         // Animator Hashes for performance
@@ -27,6 +31,17 @@ namespace Hero.Combat.Agent
         {
             AgentIndex = index;
             if (_animator == null) _animator = GetComponent<Animator>();
+            if (_renderer == null) _renderer = GetComponentInChildren<SkinnedMeshRenderer>();
+
+            AgentData data = BattleManager.Instance.GetAgentData(AgentIndex);
+            
+            // 팀별 머티리얼 적용
+            if (_renderer != null)
+            {
+                if (data.TeamId == 0 && _team0Material != null) _renderer.sharedMaterial = _team0Material;
+                else if (data.TeamId == 1 && _team1Material != null) _renderer.sharedMaterial = _team1Material;
+            }
+
             _previousPos = transform.position;
             _previousState = CombatState.Idle;
             if (_animator != null && _animator.runtimeAnimatorController != null)

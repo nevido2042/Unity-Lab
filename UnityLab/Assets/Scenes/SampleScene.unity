@@ -576,7 +576,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0a321336aa390a48bd32bac5ca39537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hero.Combat.Manager.AgentSpawner
-  _agentsToSpawnPerTeam: 1
+  _agentsToSpawnPerTeam: 10
   _spawnRadius: 20
   _team0SpawnPoint: {fileID: 0}
   _team1SpawnPoint: {fileID: 0}
@@ -593,7 +593,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hero.Combat.Manager.ObjectPooler
   _agentPrefab: {fileID: 3503167532966410781, guid: 1fb15f169fbdc444b9c3ded110664af2, type: 3}
-  _initialPoolSize: 10
+  _initialPoolSize: 20
 --- !u!114 &1070972976
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -606,7 +606,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 905d7e89aa6f7334da1512a4ccca95c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hero.Combat.Manager.BattleManager
-  maxAgents: 2
+  maxAgents: 100
 --- !u!4 &1070972977
 Transform:
   m_ObjectHideFlags: 0
@@ -652,7 +652,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hero.Combat.Agent.PlayerPossessionManager
   _playerCamera: {fileID: 330585545}
-  _ghostMinHeight: 10
   _ghostMoveSpeed: 20
   _mouseSensitivity: 0.2
   _currentState: 0

@@ -86,4 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Hero.Combat.Agent.AgentController
   _animator: {fileID: 0}
+  _renderer: {fileID: 0}
+  _team0Material: {fileID: 2100000, guid: f4fb8c083a36ec44294f9eabd63bd1f1, type: 2}
+  _team1Material: {fileID: 2100000, guid: e2040610130a73245aedc9fb9f8d9718, type: 2}
   <AgentIndex>k__BackingField: -1

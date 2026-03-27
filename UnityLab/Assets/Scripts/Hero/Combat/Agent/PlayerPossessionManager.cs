@@ -242,11 +242,15 @@ namespace Hero.Combat.Agent
             camRight.y = 0;
             camRight.Normalize();
 
-            Vector3 moveDir = camRight * h + camForward * v;
-            if (moveDir.sqrMagnitude > 0.01f)
+            // 이동 (Idle 상태에서만 가능)
+            if (data.CurrentState == CombatState.Idle)
             {
-                moveDir.Normalize();
-                data.Position += moveDir * (data.MoveSpeed * Time.deltaTime);
+                Vector3 moveDir = camRight * h + camForward * v;
+                if (moveDir.sqrMagnitude > 0.01f)
+                {
+                    moveDir.Normalize();
+                    data.Position += moveDir * (data.MoveSpeed * Time.deltaTime);
+                }
             }
 
             // 항시 정면 응시 (카메라 방향 기준)

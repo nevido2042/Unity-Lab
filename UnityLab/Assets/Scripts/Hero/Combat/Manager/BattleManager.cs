@@ -11,6 +11,15 @@ namespace Hero.Combat.Manager
         public int MaxAgents { get => maxAgents; set => maxAgents = value; }
         private AgentData[] _agents;
 
+        [Header("Troop Stats")]
+        [SerializeField] private int _playerTroopCount;
+        [SerializeField] private int _enemyTroopCount;
+
+        public int PlayerTroopCount => _playerTroopCount;
+        public int EnemyTroopCount => _enemyTroopCount;
+
+        public event System.Action<int, int> OnTroopCountChanged; // (teamId, newCount)
+
         // 타겟 탐색 주기를 늦춰서 최적화 (모든 프레임마다 거리 계산 금지)
         private float _targetSearchTimer = 0f;
         private readonly float targetSearchInterval = 0.5f;
@@ -30,6 +39,12 @@ namespace Hero.Combat.Manager
                 if (!_agents[i].IsActive)
                 {
                     _agents[i].Reset(spawnPosition, spawnForward, teamId);
+                    
+                    if (teamId == 0) _playerTroopCount++;
+                    else if (teamId == 1) _enemyTroopCount++;
+                    
+                    OnTroopCountChanged?.Invoke(teamId, teamId == 0 ? _playerTroopCount : _enemyTroopCount);
+                    
                     return i;
                 }
             }
@@ -71,6 +86,11 @@ namespace Hero.Combat.Manager
                 {
                     _agents[i].CurrentState = CombatState.Dead;
                     _agents[i].TargetIndex = -1;
+                    
+                    if (_agents[i].TeamId == 0) _playerTroopCount--;
+                    else if (_agents[i].TeamId == 1) _enemyTroopCount--;
+                    
+                    OnTroopCountChanged?.Invoke(_agents[i].TeamId, _agents[i].TeamId == 0 ? _playerTroopCount : _enemyTroopCount);
                     continue;
                 }
 
